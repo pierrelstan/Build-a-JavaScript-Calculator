@@ -4,4 +4,4 @@ const Sign =({ sign, onClick })=> (
 )
 export default Sign;
 
-export const SignData = [{ id: "add", sign: "+" }, { id: "subtract", sign: "-" }, { id: "multiply", sign: "*" }, { id: "divide", sign: "/" }, { id: "decimal", sign: "." }, { id: "clear", sign: "Clear" }, { id: "equals", sign: "=" }];
+export const SignData = [{ id: "add", sign: "+" }, { id: "subtract", sign: "-" }, { id: "multiply", sign: "*" }, { id: "divide", sign: "/" }, { id: "decimal", sign: "." }, { id: "equals", sign: "=" }];

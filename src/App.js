@@ -9,24 +9,37 @@ class App extends Component {
     this.state={
       display: [],
       calculation: [],
+      resetButtons: false,
     }
   }
 // arrow fix biding
   handleClickNumbers=(numbers)=>{
-    this.setState(()=>({
-      display:numbers
+    this.setState((prevState)=>({
+      display: [...prevState.display, numbers]
     }))
     console.log(numbers)
   }
 handleClickSigns=(sign)=> {
-  this.setState(() => ({
-    display: sign
+  this.setState((prevState) => ({
+    display: [...prevState.display, sign]
   }))
+  console.log(sign)
+ 
 }
+// Arrow fix biding 
+  ResetButtons = ()=> {
+    const { resetButtons} = this.state;
+    if(!resetButtons){
+      this.setState({
+        display:[]
+      })
+    }
+  }
   render() {
     const { display } = this.state;
     return <div className="App-container">
       <div id="display"> { display } </div>
+      <button id="Clear" onClick={this.ResetButtons}>Clear</button>
         <div className="numbers">
           {
           NumbersData.map((data)=>
