@@ -7,62 +7,85 @@ class App extends Component {
   constructor(){
     super();
     this.state={
-      display: [],
+      display: [0],
       calculation: [],
       resetButtons: false,
+      sign:[]
     }
   }
 // arrow fix biding
   handleClickNumbers=(numbers)=>{
-    this.setState((prevState)=>({
+  const { display } = this.state;
+  // check if 0 exist in the display if true return an empty state display array
+   if (display[0] === 0){
+     this.setState({
+       calculation: [],
+       display:[]
+     })
+   }
+    this.setState(prevState => ({
       display: [...prevState.display, numbers]
-    }))
-    console.log(numbers)
+    }));
+    // console.log(numbers)
+
+    this.Calculation(numbers)
   }
+  //that's return  the calculations
+  Calculation(numbers){
+   console.log(numbers)
+   
+      }
+
 handleClickSigns=(sign)=> {
   this.setState((prevState) => ({
-    display: [...prevState.display, sign]
+    display: [...prevState.display,sign]
   }))
-  console.log(sign)
- 
+
+  this.Calculation(sign)
 }
 // Arrow fix biding 
   ResetButtons = ()=> {
     const { resetButtons} = this.state;
     if(!resetButtons){
       this.setState({
-        display:[]
+        display:[0]
       })
     }
   }
+  //Arrow fix biding 
+  EqualCalculations=()=> {
+   return this.Calculation
+  }
   render() {
-    const { display } = this.state;
+    const { display, calculation } = this.state;
     return <div className="App-container">
-      <div id="display"> { display } </div>
-      <button id="Clear" onClick={this.ResetButtons}>Clear</button>
+        <div id="display"> { display } </div>
+        <button id="clear" onClick={this.ResetButtons}>
+          Clear
+        </button>
+      <button id="equals">
+          =
+        </button>
         <div className="numbers">
-          {
-          NumbersData.map((data)=>
+          {NumbersData.map(data => (
             <CalculatorNumbers
-            numbers={data.number}
-            key={data.id}
+              numbers={data.number}
+              key={data.id}
+              id={data.id}
               onClick={this.handleClickNumbers}
             />
-          )
-          }
+          ))}
         </div>
         <div className="sign">
-        {
-          SignData.map((dataSign)=>
-            <Sign 
-            sign={dataSign.sign} 
-            key={dataSign.id}
-            onClick={this.handleClickSigns}
-             />
-          )
-        }
+          {SignData.map(dataSign => (
+            <Sign
+              sign={dataSign.sign}
+              key={dataSign.id}
+              id={dataSign.id}
+              onClick={this.handleClickSigns}
+            />
+          ))}
         </div>
-      
       </div>;
   }
 }

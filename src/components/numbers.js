@@ -1,9 +1,9 @@
 import React from "react";
 
 
-const CalculatorNumbers =({numbers, onClick})=> (
+const CalculatorNumbers =({numbers, onClick,id, index})=> (
        
-    <button onClick={()=> onClick(numbers)}>{numbers}</button>
+    <button id={id} onClick={()=> onClick(numbers, index)} className="button_numbers">{numbers}</button>
 )
 export default CalculatorNumbers;
 

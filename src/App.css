@@ -1,20 +1,42 @@
 .numbers {
     text-align: center;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1px;
-    width: 90px;
+    grid-template-columns: repeat(3, 2fr);
+     grid-gap: 1px;
+   width: 90px;
 
 }
 .sign {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     grid-gap: 1px;
-    width: 90px;
+  width: 90px;
 }
 
 #display {
-     height: 50px;
-  width: 100px;
-  background-color: rgb(216, 216, 216);
+width: 270px;
+padding: 20px 30px;
+text-align: right;
+background-color: rgb(216, 216, 216);
+border: solid;
+}
+
+.button_sign {
+color: #fff;
+background-color: blueviolet;
+padding: 20px 60px;
+
+}
+.button_numbers {
+    color: #fff;
+background-color: #333;
+padding: 20px 60px;
+}
+#clear {
+    padding: 20px 60px;
+    background-color: aquamarine;
+}
+#equals {
+     padding: 20px 60px;
+    background-color: rgb(194, 58, 137);
 }
