@@ -2,53 +2,98 @@ import React, { Component } from 'react';
 import './App.css';
 import CalculatorNumbers, { NumbersData } from "./components/numbers";
 import Sign, { SignData } from "./components/sign";
+import Display from './components/display';
+import LimitDigit from './components/limitDigit';
+import Dot  from './components/dot';
+
 
 class App extends Component {
   constructor(){
     super();
-    this.state={
-      display: [0],
-      calculation: [],
-      resetButtons: false,
-      sign:[]
-    }
+    this.state = { display: [0], calculation: false, resetButtons: false, sign: [], limitDigit: "limited digits met", num:[], findhowmanydot:true , dotclicked:[], clickDot: [],Dot:[]};
   }
 // arrow fix biding
   handleClickNumbers=(numbers)=>{
-  const { display } = this.state;
+  const { display, calculation} = this.state;
+  
   // check if 0 exist in the the beginning of display if true return an empty state display array
-   if (display[0] === 0){
-     this.setState({
-       calculation: [], 
-       display:[]
-     })
+   if (display[0] === 0 ){
+     let displayIndexOne = display[1]
+     this.setState({ display: [displayIndexOne], });
    }
+   if(display.length === 3){
+    display.filter((data) => {
+      if(data === 0){
+        this.setState({
+          display: []
+        })
+      }
+     })
+     
+     
+   }
+  
+    if (calculation === true) {
+
+      console.log("this is true")
+      this.setState(prevState => ({
+        display: [...prevState.display],
+        calculation: false
+      }))
+    }
+    //remove underfined in the begining of the display state array
+   
+      // if (display[0] === "undefined") {
+      //   return this.setState({
+      //     display:display.shift()
+      //   })
+
+      // }
+    
+
+
+    console.log(display)
+   //check if the length of display === 25 
    if(display.length === 25) {
      const result = display.filter(num => num.length === 25);
      this.setState(prevState => ({
-       display: [ result]
+       display: [result],
      }));
+     const { numbers} = this.state;
+     console.log(numbers)
    }
     
     this.setState(prevState => ({
       display: [...prevState.display, numbers]
     }));
+    
     // console.log(numbers)
-
-    this.Calculation(numbers)
+   
   }
   //that's return  the calculations
-  Calculation(numbers){
-   console.log(numbers)
-   
+  Calculation=()=>{
+  const { display, findhowmanydot }= this.state;
+    
+
+  // find how many times . appears
+    let turnnumbersToString = display.toString();
+    let replaceItems = turnnumbersToString.replace(/[,]/gi, "");
+
+  
+    let total =eval(replaceItems);
+    this.setState({
+      display: [total],
+      calculation: true,
+    })
+    console.log(total + "from calcution")
       }
 
 handleClickSigns=(sign)=> {
   this.setState((prevState) => ({
-    display: [...prevState.display,sign]
+    display: [...prevState.display,sign],
+    sign:[sign]
   }))
-
-  this.Calculation(sign)
+console.log(sign + "from handleClickSigns")
 }
 // Arrow fix biding 
   ResetButtons = ()=> {
@@ -63,13 +108,68 @@ handleClickSigns=(sign)=> {
   EqualCalculations=()=> {
    return this.Calculation
   }
+  //arrow fix bidng
+handleDot=(dot)=> {
+  const { display, Dot }=  this.state;
+this.setState((prevState=>({
+  display: [...prevState.display, dot],
+  // Dot:[...prevState.Dot,...dot]
+
+})))
+// console.log(Dot)
+  // search the  quantity of value  "." in display
+  let searchPositionOfValueOfDot= display.filter((data)=> {
+    return data === "."
+  })
+  // search the positition on "." in dipslay
+  let searchThePositionOfDot = display.indexOf(".")
+    // console.log(searchThePositionOfDot)
+  // the next index of dot in the display state 
+   let theNextValueOfDot = searchThePositionOfDot + 1;
+
+
+  let theLengthOfDot = searchPositionOfValueOfDot.length;
+  if(display[searchPositionOfValueOfDot] === display[theNextValueOfDot]) {
+    display.splice(theNextValueOfDot - theLengthOfDot, 1)
+    // console.log(display + " the original display")
+  }
+  // console.log(theLengthOfDot)
+  // create a copy of display state to create a new array
+  let newArrayDisplay = display.slice(searchThePositionOfDot + searchThePositionOfDot + 1);
+  
+  // 
+  // console.log(newArrayDisplay + "the new array")
+  // search the  quantity of value  "." in newArrayDisplay
+  let searchPositionOfValueOfNewDot = newArrayDisplay.filter((data) => {
+    return data === "."
+  })
+  // search the positition on "." in dipslay
+  let searchThePositionOfNewDot = newArrayDisplay.indexOf(".")
+  // console.log(searchThePositionOfDot)
+  // the next index of dot in the display state 
+  let theNextValueOfNewDot = searchThePositionOfNewDot + 1;
+
+
+  let theLengthOfNewDot = searchPositionOfValueOfNewDot.length;
+  console.log(theLengthOfNewDot + " the length")
+  if (newArrayDisplay[searchPositionOfValueOfNewDot] === newArrayDisplay[theNextValueOfNewDot]) {
+    newArrayDisplay.splice(theNextValueOfNewDot - theLengthOfNewDot + 2)
+    
+    
+    this.setState((prevState)=> ({
+      display:[prevState.display, newArrayDisplay]
+    }))
+    console.log(newArrayDisplay + " the new array of display")
+  }
+  }
+
+
   render() {
-    const { display } = this.state;
-    return <div className="back-gr">
-      
+    const { display, limitDigit } = this.state;
+    return ( <div className="back-gr">
         <div className="App-container">
-        <h1 className="title-calculator">calculator</h1>
-          <div id="display"> {display} </div>
+          <h1 className="title-calculator">calculator</h1>
+          <Display display={display} />
 
           <div className="numbers">
             {NumbersData.map(data => (
@@ -83,7 +183,11 @@ handleClickSigns=(sign)=> {
             <button id="clear" onClick={this.ResetButtons}>
               Clear
             </button>
-            <button id="equals">=</button>
+            <button id="equals" onClick={this.Calculation}>
+              =
+            </button>
+          <Dot dot={"."} onClick={this.handleDot} />
+           
             <div className="sign">
               {SignData.map(dataSign => (
                 <Sign
@@ -96,7 +200,7 @@ handleClickSigns=(sign)=> {
             </div>
           </div>
         </div>
-      </div>;
+    </div> );
   }
 }
 
