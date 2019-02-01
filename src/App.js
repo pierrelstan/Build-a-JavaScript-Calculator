@@ -3,14 +3,14 @@ import './App.css';
 import CalculatorNumbers, { NumbersData } from "./components/numbers";
 import Sign, { SignData } from "./components/sign";
 import Display from './components/display';
-import LimitDigit from './components/limitDigit';
 import Dot  from './components/dot';
+import Results from './components/results';
 
 
 class App extends Component {
   constructor(){
     super();
-    this.state = { display: [0], calculation: false, resetButtons: false, sign: [], limitDigit: "limited digits met", num:[], findhowmanydot:true , dotclicked:[], clickDot: [],Dot:[]};
+    this.state = { display: [0], calculation: false, resetButtons: false, sign: [], limitDigit: "limited digits met", num:[], findhowmanydot:true , dotclicked:[], clickDot: [],Dot:[], results:[], result: false};
   }
 // arrow fix biding
   handleClickNumbers=(numbers)=>{
@@ -29,12 +29,9 @@ class App extends Component {
         })
       }
      })
-     
-     
    }
   
     if (calculation === true) {
-
       console.log("this is true")
       this.setState(prevState => ({
         display: [...prevState.display],
@@ -42,17 +39,14 @@ class App extends Component {
       }))
     }
     //remove underfined in the begining of the display state array
-   
       // if (display[0] === "undefined") {
       //   return this.setState({
       //     display:display.shift()
       //   })
 
       // }
-    
 
-
-    console.log(display)
+    // console.log(display)
    //check if the length of display === 25 
    if(display.length === 25) {
      const result = display.filter(num => num.length === 25);
@@ -60,7 +54,7 @@ class App extends Component {
        display: [result],
      }));
      const { numbers} = this.state;
-     console.log(numbers)
+    //  console.log(numbers)
    }
     
     this.setState(prevState => ({
@@ -72,20 +66,25 @@ class App extends Component {
   }
   //that's return  the calculations
   Calculation=()=>{
-  const { display, findhowmanydot }= this.state;
+  const { display, results }= this.state;
     
 
-  // find how many times . appears
+ 
     let turnnumbersToString = display.toString();
-    let replaceItems = turnnumbersToString.replace(/[,]/gi, "");
+    let turnToString = results.toString();
+    let replaceItemsTwo = turnToString.replace(/[,]/gi, "");
+    let replaceItemsOne = turnnumbersToString.replace(/[,]/gi, "");
 
   
-    let total =eval(replaceItems);
+    let total = eval(replaceItemsOne);
+  
     this.setState({
       display: [total],
+      // result: [totalresult],
       calculation: true,
     })
     console.log(total + "from calcution")
+    // console.log(totalresult + "from calcution")
       }
 
 handleClickSigns=(sign)=> {
@@ -93,7 +92,7 @@ handleClickSigns=(sign)=> {
     display: [...prevState.display,sign],
     sign:[sign]
   }))
-console.log(sign + "from handleClickSigns")
+// console.log(sign + "from handleClickSigns")
 }
 // Arrow fix biding 
   ResetButtons = ()=> {
@@ -118,7 +117,9 @@ this.setState((prevState=>({
 })))
 // console.log(Dot)
   // search the  quantity of value  "." in display
-  let searchPositionOfValueOfDot= display.filter((data)=> {
+  // create a copy of display to not modify the original array
+  // let displayCopyOne = display.slice(0);
+  let searchPositionOfValueOfDot = display.filter((data)=> {
     return data === "."
   })
   // search the positition on "." in dipslay
@@ -129,14 +130,20 @@ this.setState((prevState=>({
 
 
   let theLengthOfDot = searchPositionOfValueOfDot.length;
-  if(display[searchPositionOfValueOfDot] === display[theNextValueOfDot]) {
-    display.splice(theNextValueOfDot - theLengthOfDot, 1)
-    // console.log(display + " the original display")
+if (display[searchPositionOfValueOfDot] === display[theNextValueOfDot]) {
+    display.splice(theNextValueOfDot - theLengthOfDot, theLengthOfDot + theLengthOfDot)
+
   }
-  // console.log(theLengthOfDot)
+  else if(display[searchPositionOfValueOfDot] === display[theNextValueOfDot + 1]) {
+  display.splice(display[theNextValueOfDot + 1 ], theLengthOfDot + theLengthOfDot  + 1  - 2)
+  
+  this.setState({
+    display:display
+  })
+  }
   // create a copy of display state to create a new array
   let newArrayDisplay = display.slice(searchThePositionOfDot + searchThePositionOfDot + 1);
-  
+
   // 
   // console.log(newArrayDisplay + "the new array")
   // search the  quantity of value  "." in newArrayDisplay
@@ -154,23 +161,20 @@ this.setState((prevState=>({
   console.log(theLengthOfNewDot + " the length")
   if (newArrayDisplay[searchPositionOfValueOfNewDot] === newArrayDisplay[theNextValueOfNewDot]) {
     newArrayDisplay.splice(theNextValueOfNewDot - theLengthOfNewDot + 2)
-    
-    
-    this.setState((prevState)=> ({
-      display:[prevState.display, newArrayDisplay]
-    }))
+
+
+ this.setState((prevState) => ({
+        display: [prevState.display, newArrayDisplay]
+      }))
     console.log(newArrayDisplay + " the new array of display")
-  }
-  }
-
-
+  } 
+}
   render() {
-    const { display, limitDigit } = this.state;
+    const { display, results, result } = this.state;
     return ( <div className="back-gr">
         <div className="App-container">
           <h1 className="title-calculator">calculator</h1>
-          <Display display={display} />
-
+         <Display display={display} result={result} /> 
           <div className="numbers">
             {NumbersData.map(data => (
               <CalculatorNumbers
