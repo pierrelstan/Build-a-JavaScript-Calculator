@@ -30,7 +30,6 @@ class App extends Component {
         }
       })
 
-      let operators = ["*", "-", "+", "/"];
 
     }
 
@@ -62,42 +61,46 @@ class App extends Component {
   //that's return  the calculations
   Calculation = () => {
     const { display, arrayOne, } = this.state;
-    let concatTwoArray = arrayOne.concat(display)
+    
+    let concatTwoArray = display.concat(arrayOne)
 
-    let sign = ["+", "-", "/", "*"];
-    let arr = []
-    let operators = []
+    // let sign = ["+", "-", "/", "*"];
+    // let arr = []
+    // let operators = []
 
 
-     concatTwoArray.map((data) => sign.map((signs) => {
-      if (data === signs) {
-        arr.push(data)
-        operators.push(sign)
-      }
-    }))
+    //  concatTwoArray.map((data) => sign.map((signs) => {
+    //   if (data === signs) {
+    //     arr.push(data)
+    //     operators.push(sign)
+    //   }
+    // }))
 
-    // find index one in array 
-    let findIndexSignInNum = concatTwoArray.findIndex((value) => value === operators[0][0])
-    console.log(concatTwoArray + "the index")
+    // // find index one in array 
+    // let findIndexSignInNum = concatTwoArray.findIndex((value) => value === operators[0][0])
+    // console.log(concatTwoArray + " the index")
 
-    if (arr.length === 2) {
+    // if (arr.length === 2) {
       
-      let removeArr = arr.toString()
-      let y = concatTwoArray.splice(findIndexSignInNum, arr.length + 1, removeArr)
-      return concatTwoArray
-    }
-    else if (arr.length > 2) {
-      console.log("hello world")
-      
-      let addToNum = concatTwoArray.splice(findIndexSignInNum, arr.length)
-
-    }
+    //   let removeArr = arr.toString()
+    //   let y = concatTwoArray.splice(findIndexSignInNum, arr.length + 1, removeArr)
+    //   console.log(concatTwoArray)
+    // }
+    
+    // else if(arr.length === 1) {
+    // let turnStr=concatTwoArray.toString();
+    //   let r = turnStr.replace(/[,]/gi, "");
+    //   let total = eval(r);
+    // }
+    // else {
+    //   let addToNum = concatTwoArray.splice(findIndexSignInNum, arr.length)
+    // }
    
 
 
     let turnnumbersToString = concatTwoArray.toString();
-    // let turnToString = display.toString();
-    // let replaceItemsTwo = turnToString.replace(/[,]/gi, "");
+    // // let turnToString = display.toString();
+    // // let replaceItemsTwo = turnToString.replace(/[,]/gi, "");
     let replaceItemsOne = turnnumbersToString.replace(/[,]/gi, "");
 
 
@@ -109,7 +112,7 @@ class App extends Component {
       // arrayTwo: [total2],
       calculation: true,
     })
-    console.log(total + "from calcution")
+    // console.log(total + "from calcution")
     // console.log(totalresult + "from calcution")
 
   }
@@ -121,6 +124,25 @@ class App extends Component {
       sign: [sign]
     }))
     // console.log(sign + "from handleClickSigns")
+    const {display}= this.state;
+    
+    let operators = ["*", "-", "+", "/"];
+    let arr = []
+    let operator = []
+
+
+    display.map((data) => operators.map((op) => {
+      if (data === op) {
+        arr.push(data)
+        operator.push(op)
+      }
+    }))
+
+    // search the index of yhe first operator in display
+
+    let findTheFirstIndexOperatorsInDisplay = display.findIndex((value) => value === operator[0])
+    console.log(findTheFirstIndexOperatorsInDisplay)
+    // console.log(Dot)
   }
   // Arrow fix biding 
   ResetButtons = () => {
@@ -143,7 +165,23 @@ class App extends Component {
       display: [...prevState.display, dot],
       // Dot:[...prevState.Dot,...dot]
     })))
-    // console.log(Dot)
+    // let operators = ["*", "-", "+", "/"];
+    // let arr = []
+    // let operator = []
+
+
+    // display.map((data) => operators.map((op) => {
+    //   if (data === op) {
+    //     arr.push(data)
+    //     operator.push(op)
+    //   }
+    // }))
+
+    // // search the index of yhe first operator in display
+
+    // let findTheFirstIndexOperatorsInDisplay = display.findIndex((value) => value === operator[0])
+    // console.log(findTheFirstIndexOperatorsInDisplay)
+    // // console.log(Dot)
     // search the  quantity of value  "." in display
 
     // let displayCopyOne = display.slice(0);
@@ -173,10 +211,6 @@ class App extends Component {
     })
     console.log(compareIfDotExist + " lalal")
 
-
-
-
-
     if (display[searchPositionOfValueOfDot] === display[theNextValueOfDot]) {
 
       display.splice(theNextValueOfDot - theLengthOfDot, theLengthOfDot + theLengthOfDot)
@@ -192,11 +226,13 @@ class App extends Component {
       }))
 
 
-    } else {
-      return
+    } 
+    else {
+      return;
     }
+  
 
-
+    
   }
 
 
