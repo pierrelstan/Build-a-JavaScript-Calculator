@@ -10,7 +10,7 @@ import Results from './components/results';
 class App extends Component {
   constructor() {
     super();
-    this.state = { display: [0], newDisplay: [], arrayOne: [], arrayTwo: [], calculation: false, resetButtons: false, sign: [], limitDigit: "limited digits met", num: [], findhowmanydot: true, dotclicked: [], clickDot: [], Dot: [], results: [], result: false };
+    this.state = { display: [0], newDisplay: [], arrayOne: [], arrayTwo: [], calculation: false, resetButtons: false, sign: [], limitDigit: "limited digits met", num: [], findhowmanydot: true, dotclicked: [], clickDot: [], Dot: [], results: [], result: false , multipleOperators: false};
   }
   // arrow fix biding
   handleClickNumbers = (numbers) => {
@@ -19,10 +19,10 @@ class App extends Component {
     // check if 0 exist in the the beginning of display if true return an empty state display array
     if (display[0] === 0) {
       let displayIndexOne = display[1]
-      this.setState({ display: [displayIndexOne], });
+      this.setState({ display: [displayIndexOne] });
     }
     if (display.length === 3) {
-      display.filter((data) => {
+      display.filter((data) =>{
         if (data === 0) {
           this.setState({
             display: []
@@ -34,7 +34,7 @@ class App extends Component {
     }
 
     if (calculation === true) {
-      console.log("this is true")
+      // console.log("this is true")
       this.setState(prevState => ({
         display: [...prevState.display],
         calculation: false
@@ -46,7 +46,6 @@ class App extends Component {
       this.setState(prevState => ({
         display: [result],
       }));
-      const { numbers } = this.state;
       //  console.log(numbers)
     }
 
@@ -59,61 +58,53 @@ class App extends Component {
 
   }
   //that's return  the calculations
-  Calculation = () => {
-    const { display, arrayOne, } = this.state;
+  Calculation = (ca) => {
+    const { display, arrayTwo, multipleOperators, results } = this.state;
+  
     
-    let concatTwoArray = display.concat(arrayOne)
+   if(multipleOperators === false) {
+      let concatTwoArray = display;
+      // console.log(concatTwoArray + "te calculations")
+      let turnnumbersToString = concatTwoArray.join("");
 
-    // let sign = ["+", "-", "/", "*"];
-    // let arr = []
-    // let operators = []
 
+      // // let replaceItemsTwo = turnToString.replace(/[,]/gi, "");
+      let replaceItemsTwo = turnnumbersToString.replace(/[,]/gi, "");
+      // let x = Number(replaceItemsOne)
+      console.log(replaceItemsTwo+ "ht")
+      let total2 = eval(replaceItemsTwo);
 
-    //  concatTwoArray.map((data) => sign.map((signs) => {
-    //   if (data === signs) {
-    //     arr.push(data)
-    //     operators.push(sign)
-    //   }
-    // }))
-
-    // // find index one in array 
-    // let findIndexSignInNum = concatTwoArray.findIndex((value) => value === operators[0][0])
-    // console.log(concatTwoArray + " the index")
-
-    // if (arr.length === 2) {
-      
-    //   let removeArr = arr.toString()
-    //   let y = concatTwoArray.splice(findIndexSignInNum, arr.length + 1, removeArr)
-    //   console.log(concatTwoArray)
-    // }
+      // let total2 = eval(replaceItemsOne);
+      console.log(total2 + "rerler")
+      this.setState({
+       display:[total2],
+        calculation: true,
+      })
+      // console.log(total2 + "from calcution")
+      console.log(display + "results")
+    }
+  else {
+     let Nexdi = display.slice(display.length - 2);
+     let a = Nexdi.reverse()
+     console.log(Nexdi.reverse() + "Nex")
+     let copNex2 = arrayTwo[0].slice(0, arrayTwo[0].length - 1)
+     console.log(copNex2 + "Nex23")
+     let concatTwoArray = [...copNex2, ...a];
+     let turnnumbersToStringp = concatTwoArray.join("");
+     let replaceItemsOne = turnnumbersToStringp.replace(/[,]/gi, "");
+     // let x = Number(replaceItemsOne)
+     console.log(replaceItemsOne + "ht")
+     let total = eval(replaceItemsOne);
+     // let total2 = eval(replaceItemsOne);
+     // console.log(total2)
+     this.setState({
+       display: [total],
+       // results:[total],
+       // arrayTwo: [total2],
+       calculation: true,
+     })
+  }
     
-    // else if(arr.length === 1) {
-    // let turnStr=concatTwoArray.toString();
-    //   let r = turnStr.replace(/[,]/gi, "");
-    //   let total = eval(r);
-    // }
-    // else {
-    //   let addToNum = concatTwoArray.splice(findIndexSignInNum, arr.length)
-    // }
-   
-
-
-    let turnnumbersToString = concatTwoArray.toString();
-    // // let turnToString = display.toString();
-    // // let replaceItemsTwo = turnToString.replace(/[,]/gi, "");
-    let replaceItemsOne = turnnumbersToString.replace(/[,]/gi, "");
-
-
-    let total = eval(replaceItemsOne);
-    // let total2 = eval(replaceItemsOne);
-    // console.log(total2)
-    this.setState({
-      display: [total],
-      // arrayTwo: [total2],
-      calculation: true,
-    })
-    // console.log(total + "from calcution")
-    // console.log(totalresult + "from calcution")
 
   }
 
@@ -121,28 +112,96 @@ class App extends Component {
   handleClickSigns = (sign) => {
     this.setState((prevState) => ({
       display: [...prevState.display, sign],
-      sign: [sign]
     }))
-    // console.log(sign + "from handleClickSigns")
-    const {display}= this.state;
+   
+    const { display, arrayTwo }= this.state;
+    let operatorsOne = ["*", "+", "/", "-"];
+
+    let arrPrincipale = display;
     
-    let operators = ["*", "-", "+", "/"];
-    let arr = []
-    let operator = []
+      // create an empty array
+      let displayy = [];
+
+ 
 
 
-    display.map((data) => operators.map((op) => {
-      if (data === op) {
-        arr.push(data)
-        operator.push(op)
+    //  Check if operator exist in arrPrincipale 
+    arrPrincipale.map((ar) => operatorsOne.map((op) => {
+      if (ar === op) {
+        displayy.push(ar)
       }
     }))
 
-    // search the index of yhe first operator in display
+    // console.log(display)
+    // take the  display who is the operators that exist in arrPrincipale
+    // and find the index of  operators that exist in arrPrincipale
+    let y = displayy.map((subDisplay) => {
+      // console.log(subDisplay)
+      let displaytoStr = arrPrincipale.toString()
+      return arrPrincipale.findIndex((v) => v === subDisplay)
+    })
 
-    let findTheFirstIndexOperatorsInDisplay = display.findIndex((value) => value === operator[0])
-    console.log(findTheFirstIndexOperatorsInDisplay)
-    // console.log(Dot)
+    if(y.length >=2 ){
+      this.setState({
+        multipleOperators: true
+      })
+    }
+    else  if(y.length <= 1){
+      this.setState({
+        multipleOperators: false
+      })
+    }
+    else {
+   return;
+    }
+    // y return the index operators that exist in arrPrincipale 
+    // console.log(y)
+    // iterate in y 
+    let co = y.map((data) => {
+      // console.log([data])
+      // create the current operators that exist in arrPrincipale
+      let indexArrOne = arrPrincipale[data];
+      // compare arrPrincipale with indexArrOne  and compare the lenght of y
+      // if (arrPrincipale.includes(indexArrOne) === true && y.length === 1) {
+      //   let copyArray = arrPrincipale.slice(0);
+      //   // let indexOne = y[0]
+      //   // let gh = copyArray.splice(data, y.length, arrPrincipale[data])
+
+      //   return copyArray
+      // }
+      if (arrPrincipale.includes(indexArrOne) === true && y.length === 2) {
+        let indexY = y[0]
+        let indexTw = y[1];
+        let copyArray = arrPrincipale.slice(0)
+        copyArray.splice(data, y.length - 1, arrPrincipale[indexTw])
+        return copyArray
+      }
+      else if (arrPrincipale.includes(indexArrOne) === true && y.length === 3) {
+        let indexY = y[0]
+        let indexTw = y[1];
+        let indexThr = y[2];
+        let copyArray = arrPrincipale.slice(0)
+        copyArray.splice(data, y.length, arrPrincipale[indexThr])
+        return copyArray
+      }
+      else if (arrPrincipale.includes(indexArrOne) === true && y.length > 3) {
+        let indexFour = [3];
+        let copyArray = arrPrincipale.slice(0)
+        copyArray.splice(data, y.length, arrPrincipale[y[data]])
+        return copyArray
+      }
+      else {
+        return arrPrincipale
+      }
+
+    })
+  
+  this.setState((prevState)=> ({
+    arrayTwo: [ co[0]],
+  }))
+    
+ 
+    
   }
   // Arrow fix biding 
   ResetButtons = () => {
@@ -150,7 +209,8 @@ class App extends Component {
     if (!resetButtons) {
       this.setState({
         display: [0],
-        arrayOne: []
+        arrayTwo: [],
+        results:[]
       })
     }
   }
@@ -165,24 +225,6 @@ class App extends Component {
       display: [...prevState.display, dot],
       // Dot:[...prevState.Dot,...dot]
     })))
-    // let operators = ["*", "-", "+", "/"];
-    // let arr = []
-    // let operator = []
-
-
-    // display.map((data) => operators.map((op) => {
-    //   if (data === op) {
-    //     arr.push(data)
-    //     operator.push(op)
-    //   }
-    // }))
-
-    // // search the index of yhe first operator in display
-
-    // let findTheFirstIndexOperatorsInDisplay = display.findIndex((value) => value === operator[0])
-    // console.log(findTheFirstIndexOperatorsInDisplay)
-    // // console.log(Dot)
-    // search the  quantity of value  "." in display
 
     // let displayCopyOne = display.slice(0);
     let searchPositionOfValueOfDot = display.filter((data) => {
@@ -198,7 +240,6 @@ class App extends Component {
     let theLengthOfDot = searchPositionOfValueOfDot.length;
     // create a copy of display state to create a new array
     // create a copy of display to not modify the original array
-    const { calculation } = this.state;
 
     let copyArray = display.slice(searchThePositionOfDot + 1)
 
@@ -209,7 +250,7 @@ class App extends Component {
     let compareIfDotExist = copyArray.filter((data) => {
       return data !== "."
     })
-    console.log(compareIfDotExist + " lalal")
+    // console.log(compareIfDotExist + " lalal")
 
     if (display[searchPositionOfValueOfDot] === display[theNextValueOfDot]) {
 
@@ -222,7 +263,7 @@ class App extends Component {
       console.log(displayOne + "the first display")
       this.setState((prevState) => ({
         display: [display],
-        arrayOne: [displayOne]
+        arrayOne: [display]
       }))
 
 
@@ -238,11 +279,11 @@ class App extends Component {
 
 
   render() {
-    const { display, result } = this.state;
+    const { display, results } = this.state;
     return (<div className="back-gr">
       <div className="App-container">
         <h1 className="title-calculator">calculator</h1>
-        <Display display={display} result={result} />
+        <Display display={display} result={results} />
         <div className="numbers">
           {NumbersData.map(data => (
             <CalculatorNumbers
