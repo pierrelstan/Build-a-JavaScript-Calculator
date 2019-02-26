@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Sarabun');
 .numbers {
-    text-align: center;
+    /* text-align: center;
     display: grid;
     grid-template-columns: repeat(3, 2fr);
      grid-gap: 1px;
-   width: 90px;
+   width: 90px; */
 }
 .sign {
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 2px;
-    width: 90px;
+    width: 90px; */
 }
 #result {
 width: 200px;
@@ -46,6 +46,7 @@ text-decoration: none;
 }
 #decimal{
     background-color: #CDDC39;
+    color:#000;
     /* padding: 10px 1px; */
     border: none;
     margin: 3px;
@@ -85,7 +86,7 @@ text-decoration: none;
  margin:2px;
 }
 body{
-    display: flex;
+    display: grid;
   justify-content: center;
   background-color: #77997C;
   height:100%;

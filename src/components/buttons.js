@@ -2,8 +2,7 @@ import React, { Component} from "react";
 
 class ButtonData extends Component {
 
-    handleClickButtons = () => {
-        this.props.handleClick(this.props.buttonName)
+    handleClickButtons = () => {        this.props.handleClick(this.props.buttonName)
     }
     render(){
        
@@ -65,4 +64,5 @@ export const buttonData =[
       { id: "multiply", number: "*" }, 
     { id: "divide", number: "/" },
     {id: "decimal", number: "."},
+    {id: "equals", number: "="}
 ]

@@ -11,7 +11,8 @@ class App extends Component {
     this.state = {
        display: "0",
       operators: false,
-      clear:false
+      clear:false,
+      decimal:false
       }
   }
 
@@ -41,17 +42,12 @@ class App extends Component {
       
         display =buttonName;
       }
-      this.setState({
-        
-        display: display
-      })
+      
       break;
      case buttonName ==="Clear":
-     if(!this.state.clear){
-
-      console.log("we")
-     }
-
+           display="0"
+      operators = false;
+      this.setState({ decimal: false })
      break;
       case buttonName === "-" ||
            buttonName === "+" ||
@@ -60,20 +56,36 @@ class App extends Component {
            if(!this.state.operators){
              display+=buttonName;
              operators = true;
+             this.setState({ decimal: false })
            }
            else {
-             const newNumber = display.slice(0, display.length-1)
-             display = newNumber + buttonName
+           
+             let newNumber = display.slice(0, display.length -1)
+           
+             display=newNumber;
+             display += buttonName
            }
       
      
       break;
+
+      case buttonName === "=":
+      display = eval(display)
+      operators = false;
+
+     break;
+     case  buttonName === ".":
+     if(!this.state.decimal){
+       display += "."
+       this.setState({decimal:true,})
+     }
+     break;
       default:
       console.log("errors")
   }
     this.setState({
-      operators:true,
-      display: display
+      operators,
+      display
     })
   }
   render() {
