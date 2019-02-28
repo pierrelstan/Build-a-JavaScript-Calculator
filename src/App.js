@@ -44,7 +44,7 @@ class App extends Component {
       }
       
       break;
-     case buttonName ==="Clear":
+     case buttonName ==="AC":
            display="0"
       operators = false;
       this.setState({ decimal: false })
@@ -97,13 +97,13 @@ class App extends Component {
         <div className="App-container">
           <h1 className="title-calculator">calculator</h1>
          <Display display={display}  /> 
-          
+          <div className="button_container">
           {
             buttonData.map((data) => (
               <ButtonData key={data.id} id={data.id} buttonName={data.number} handleClick={this.handleClick} />
             ))
           }
-
+          </div>
         </div>
     </div> 
     );

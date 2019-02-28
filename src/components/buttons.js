@@ -57,7 +57,7 @@ export const buttonData =[
      number:"9"
  },
  {
-     id:"clear", number:"Clear"
+     id:"clear", number:"AC"
  },
     { id: "add", number: "+" },
      { id: "subtract", number: "-" },
