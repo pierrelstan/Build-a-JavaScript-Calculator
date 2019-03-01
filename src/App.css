@@ -14,63 +14,13 @@
    
 }
 
-/* .button_numbers {
-color: #fff;
-background-color: #58595B;
-padding: 15px 32px;
-border: none;
-text-decoration: none;
- font-size: 14px; 
- border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-} */
-/* .button_container{
- display: grid;
- grid-template-columns: repeat(3, 1fr);
- grid-gap: 20px;
- padding: 20px;
-} */
-
-/* #clear {
-  padding: 15px 32px;
-    background-color: aquamarine;
-    border: none;
-    color:#333;
-text-decoration: none;
- font-size: 16px;
- border-radius: 10px;
- box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
- margin:2px;
-  grid-area: 5 / 3/ 6 / 4;
-} */
-/* #equals {
-    background-color: rgb(194, 58, 137);
-    border: none;
-text-decoration: none;
- font-size: 16px;
- border-radius: 10px;
- box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
- margin:2px;
-   color: #fff;
-   grid-area: 2 / 4 / 6 / 5;
-
-} */
 body{
     display: grid;
   justify-content: center;
   background-color: #77997C;
   height:100%;
 }
-/* .App-container {
-border: 1px solid #ccc;
-border-radius: 5px;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-width: 400px;
-background-color: #8BC34A;
-} */
+
 .title-calculator {
   color:#333;
     text-align: center;
